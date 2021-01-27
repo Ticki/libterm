@@ -11,8 +11,6 @@
 //! For more information refer to the [README](https://github.com/redox-os/termion).
 #![warn(missing_docs)]
 
-extern crate numtoa;
-
 #[cfg(target_os = "redox")]
 #[path="sys/redox/mod.rs"]
 mod sys;
@@ -26,8 +24,8 @@ pub use sys::size::terminal_size;
 pub use sys::size::terminal_size_pixels;
 pub use sys::tty::{is_tty, get_tty};
 
-mod async;
-pub use async::{AsyncReader, async_stdin};
+mod async_input;
+pub use async_input::{AsyncReader, async_stdin};
 
 #[macro_use]
 mod macros;

@@ -8,6 +8,7 @@ documentation = "https://docs.rs/termion"
 license = "MIT"
 keywords = ["tty", "color", "terminal", "password", "tui"]
 exclude = ["target", "CHANGELOG.md", "image.png", "Cargo.lock"]
+edition = "2018"
 
 [dependencies]
 numtoa = { version = "0.1", features = ["std"]}

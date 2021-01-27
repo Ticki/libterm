@@ -13,10 +13,10 @@
 //! ```
 
 use std::fmt;
-use raw::CONTROL_SEQUENCE_TIMEOUT;
+use crate::raw::CONTROL_SEQUENCE_TIMEOUT;
 use std::io::{self, Write, Read};
 use std::time::{SystemTime, Duration};
-use async::async_stdin;
+use crate::async_input::async_stdin;
 use std::env;
 use std::fmt::Debug;
 use numtoa::NumToA;

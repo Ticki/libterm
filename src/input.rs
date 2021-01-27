@@ -3,8 +3,8 @@
 use std::io::{self, Read, Write};
 use std::ops;
 
-use event::{self, Event, Key};
-use raw::IntoRawMode;
+use crate::event::{self, Event, Key};
+use crate::raw::IntoRawMode;
 
 /// An iterator over input keys.
 pub struct Keys<R> {

@@ -17,6 +17,6 @@ pub fn is_tty<T: AsRawFd>(stream: &T) -> bool {
 ///
 /// This allows for getting stdio representing _only_ the TTY, and not other streams.
 pub fn get_tty() -> io::Result<fs::File> {
-    let tty = try!(env::var("TTY").map_err(|x| io::Error::new(io::ErrorKind::NotFound, x)));
+    let tty = env::var("TTY").map_err(|x| io::Error::new(io::ErrorKind::NotFound, x))?;
     fs::OpenOptions::new().read(true).write(true).open(tty)
 }

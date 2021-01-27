@@ -3,9 +3,9 @@
 use std::fmt;
 use std::ops;
 use std::io::{self, Write, Error, ErrorKind, Read};
-use async::async_stdin_until;
+use crate::async_input::async_stdin_until;
 use std::time::{SystemTime, Duration};
-use raw::CONTROL_SEQUENCE_TIMEOUT;
+use crate::raw::CONTROL_SEQUENCE_TIMEOUT;
 use numtoa::NumToA;
 
 derive_csi_sequence!("Hide the cursor.", Hide, "?25l");
@@ -194,7 +194,7 @@ impl<W: Write> HideCursor<W> {
     /// Create a hide cursor wrapper struct for the provided output and hides the cursor.
     pub fn from(mut output: W) -> Self {
         write!(output, "{}", Hide).expect("hide the cursor");
-        HideCursor { output: output }
+        HideCursor { output }
     }
 }
 
