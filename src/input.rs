@@ -224,6 +224,18 @@ impl<W: Write> Write for MouseTerminal<W> {
     }
 }
 
+#[cfg(unix)]
+mod unix_impl {
+    use super::*;
+    use std::os::unix::io::{AsRawFd, RawFd};
+
+    impl<W: Write + AsRawFd> AsRawFd for MouseTerminal<W> {
+        fn as_raw_fd(&self) -> RawFd {
+            self.term.as_raw_fd()
+        }
+    }
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
