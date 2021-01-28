@@ -31,7 +31,7 @@ fn main() {
                 // Clear the screen
                 b'c' => write!(stdout, "{}", termion::clear::All),
                 // Set red color
-                b'r' => write!(stdout, "{}", color::Fg(color::Rgb(5, 0, 0))),
+                b'r' => write!(stdout, "{}", color::Fg(color::Rgb(255, 0, 0))),
                 // Write it to stdout.
                 a => write!(stdout, "{}", a),
             }
