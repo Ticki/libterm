@@ -40,6 +40,7 @@ pub mod raw;
 pub mod screen;
 pub mod scroll;
 pub mod style;
+pub mod window;
 
 #[cfg(test)]
 mod test {
