@@ -19,7 +19,7 @@ pub fn terminal_size() -> io::Result<(u16, u16)> {
     }
 }
 
-/// Get the size of the terminal, in pixels
+/// Get the size of the terminal in pixels.
 pub fn terminal_size_pixels() -> io::Result<(u16, u16)> {
     unsafe {
         let mut size: TermSize = mem::zeroed();
