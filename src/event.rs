@@ -1,9 +1,13 @@
 //! Mouse and key events.
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 use std::io::{Error, ErrorKind};
 use std::str;
 
 /// An event reported by the terminal.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Event {
     /// A key press.
@@ -15,6 +19,7 @@ pub enum Event {
 }
 
 /// A mouse related event.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum MouseEvent {
     /// A mouse button was pressed.
@@ -32,6 +37,7 @@ pub enum MouseEvent {
 }
 
 /// A mouse button.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum MouseButton {
     /// The left mouse button.
@@ -51,6 +57,7 @@ pub enum MouseButton {
 }
 
 /// A key.
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum Key {
     /// Backspace.

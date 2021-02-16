@@ -12,6 +12,8 @@
 #![warn(missing_docs)]
 
 extern crate numtoa;
+#[cfg(feature = "serde")]
+extern crate serde;
 
 #[cfg(target_os = "redox")]
 #[path="sys/redox/mod.rs"]
