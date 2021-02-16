@@ -98,6 +98,32 @@ pub enum Key {
     __IsNotComplete,
 }
 
+impl std::fmt::Display for Key {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match *self {
+            Key::Backspace => write!(f, "Backspace"),
+            Key::Left => write!(f, "Left"),
+            Key::Right => write!(f, "Right"),
+            Key::Up => write!(f, "Up"),
+            Key::Down => write!(f, "Down"),
+            Key::Home => write!(f, "Home"),
+            Key::End => write!(f, "End"),
+            Key::PageUp => write!(f, "PageUp"),
+            Key::PageDown => write!(f, "PageDown"),
+            Key::BackTab => write!(f, "BackTab"),
+            Key::Delete => write!(f, "Delete"),
+            Key::Insert => write!(f, "Insert"),
+            Key::F(val) => write!(f, "F{}", val),
+            Key::Char(val) => write!(f, "{}", val),
+            Key::Alt(val) => write!(f, "Alt+{}", val),
+            Key::Ctrl(val) => write!(f, "Ctrl+{}", val),
+            Key::Null => write!(f, "Null"),
+            Key::Esc => write!(f, "Esc"),
+            Key::__IsNotComplete => unreachable!(),
+        }
+    }
+}
+
 /// Parse an Event from `item` and possibly subsequent bytes through `iter`.
 pub fn parse_event<I>(item: u8, iter: &mut I) -> Result<Event, Error>
     where I: Iterator<Item = Result<u8, Error>>
@@ -350,4 +376,20 @@ fn test_parse_utf8() {
         let b = bytes.next().unwrap().unwrap();
         assert!(c == parse_utf8_char(b, bytes).unwrap());
     }
+}
+
+#[cfg(test)]
+#[test]
+fn test_display() {
+    let st = "abcABC123#/\\'\"éŷ¤£€ù%323";
+
+    for c in st.chars() {
+        assert_eq!(c.to_string(), Key::Char(c).to_string());
+        assert_eq!(format!("Alt+{}", c), Key::Alt(c).to_string());
+        assert_eq!(format!("Ctrl+{}", c), Key::Ctrl(c).to_string());
+    }
+    assert_eq!("F1", Key::F(1).to_string());
+    assert_eq!("F12", Key::F(12).to_string());
+    assert_eq!("Home", Key::Home.to_string());
+    assert_eq!("PageUp", Key::PageUp.to_string());
 }
