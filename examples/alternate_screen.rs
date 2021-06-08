@@ -1,12 +1,12 @@
 extern crate termion;
 
-use termion::screen::*;
+use termion::screen::IntoAlternateScreen;
 use std::io::{Write, stdout};
 use std::{time, thread};
 
 fn main() {
     {
-        let mut screen = AlternateScreen::from(stdout());
+        let mut screen = stdout().into_alternate_screen().unwrap();
         write!(screen, "Welcome to the alternate screen.\n\nPlease wait patiently until we arrive back at the main screen in a about three seconds.").unwrap();
         screen.flush().unwrap();
 

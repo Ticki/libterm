@@ -6,12 +6,12 @@
 //! # Example
 //!
 //! ```rust
-//! use termion::screen::AlternateScreen;
+//! use termion::screen::IntoAlternateScreen;
 //! use std::io::{Write, stdout};
 //!
 //! fn main() {
 //!     {
-//!         let mut screen = AlternateScreen::from(stdout());
+//!         let mut screen = stdout().into_alternate_screen().unwrap();
 //!         write!(screen, "Writing to alternate screen!").unwrap();
 //!         screen.flush().unwrap();
 //!     }
@@ -51,18 +51,22 @@ pub struct AlternateScreen<W: Write> {
     output: W,
 }
 
-impl<W: Write> AlternateScreen<W> {
-    /// Create an alternate screen wrapper struct for the provided output and switch the terminal
-    /// to the alternate screen.
-    pub fn from(mut output: W) -> Self {
-        write!(output, "{}", ToAlternateScreen).expect("switch to alternate screen");
-        AlternateScreen { output: output }
+/// Extension trait for writers, providing the `into_alternate_screen` function.
+pub trait IntoAlternateScreen: Write + Sized {
+    /// Switch the terminal controlled by this writer to use the alternate screen. The terminal will be
+    /// restored to the main screen when the `AlternateScreen` returned by this function is
+    /// dropped.
+    fn into_alternate_screen(mut self) -> io::Result<AlternateScreen<Self>> {
+        write!(self, "{}", ToAlternateScreen)?;
+        Ok(AlternateScreen { output: self })
     }
 }
 
+impl<W: Write> IntoAlternateScreen for W {}
+
 impl<W: Write> Drop for AlternateScreen<W> {
     fn drop(&mut self) {
-        write!(self, "{}", ToMainScreen).expect("switch to main screen");
+        let _ = write!(self, "{}", ToMainScreen);
     }
 }
 

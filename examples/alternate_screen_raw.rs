@@ -3,7 +3,7 @@ extern crate termion;
 use termion::event::Key;
 use termion::input::TermRead;
 use termion::raw::IntoRawMode;
-use termion::screen::*;
+use termion::screen::{IntoAlternateScreen, ToAlternateScreen, ToMainScreen};
 use std::io::{Write, stdout, stdin};
 
 fn write_alt_screen_msg<W: Write>(screen: &mut W) {
@@ -16,7 +16,7 @@ fn write_alt_screen_msg<W: Write>(screen: &mut W) {
 
 fn main() {
     let stdin = stdin();
-    let mut screen = AlternateScreen::from(stdout().into_raw_mode().unwrap());
+    let mut screen = stdout().into_raw_mode().unwrap().into_alternate_screen().unwrap();
     write!(screen, "{}", termion::cursor::Hide).unwrap();
     write_alt_screen_msg(&mut screen);
 
