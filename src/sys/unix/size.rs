@@ -10,7 +10,7 @@ struct TermSize {
     x: c_ushort,
     y: c_ushort,
 }
-/// Get the size of the terminal.
+/// Get the size (columns, rows) of the terminal.
 pub fn terminal_size() -> io::Result<(u16, u16)> {
     unsafe {
         let mut size: TermSize = mem::zeroed();
