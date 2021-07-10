@@ -1,4 +1,4 @@
-//! Color managemement.
+//! Color management.
 //!
 //! # Example
 //!
